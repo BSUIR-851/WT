@@ -1,0 +1,93 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Sign Up | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main block-signup">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">SIGN UP:</div>
+    </div>
+    {% if result.code == 100 %}
+    <form name = "signup" action = "{{ result.redir }}" method = "post" class = "form-signup">
+        <fieldset class = "user-data register">
+            <div class = "row login">
+                <label for = "login" class = "lb-reg">Login:</label>
+                <input type = "text" class = "input-login" name = "login" placeholder = "mylogin" value = "{{ result.input_data.login }}"/>
+            </div>
+            <div class = "row email">
+                <label for = "email" class = "lb-reg">Email:</label>
+                <input type = "email" class = "input-email" name = "email" placeholder = "example@volleybet.com" value = "{{ result.input_data.email }}"/>
+            </div>
+            <div class = "row first-name">
+                <label for = "first-name" class = "lb-reg">First name:</label>
+                <input type = "text" name = "first-name" placeholder = "Your name..." value = "{{ result.input_data.first_name }}"/>
+            </div>
+            <div class = "row last-name">
+                <label for = "last-name" class = "lb-reg">Last name:</label>
+                <input type = "text" name = "last-name" placeholder = "Your last name..." value = "{{ result.input_data.last_name }}"/>
+            </div>
+            <div class = "row pass">
+                <label for = "password" class = "lb-reg">Password:</label>
+                <input type = "text" name = "pass" placeholder = "Password"/>
+            </div>
+            <div class = "row pass-check">
+                <label for = "pass-check" class = "lb-reg">Confirm password:</label>
+                <input type = "text" name = "pass-check" placeholder = "Confirm password"/>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "signup-submit" value = "SIGN UP"/>
+        </fieldset>
+    </form>
+    {% else %}
+    <form name = "signup" action = "{{ result.redir }}" class = "form-signup">
+        <fieldset class = "user-data register">
+            <label class = "head">{{ result.header}}</label><br>
+            {% for body_line in result.body %}
+            <label>{{ body_line }}</label><br>
+            {% endfor %}
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            {% if result.success == true %}
+            <input type = "submit" value = "Back to main"/>
+            {% else %}
+            <input type = "submit" value = "Retry register"/>
+            {% endif %}
+        </fieldset>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

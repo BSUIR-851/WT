@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset= "utf-8">
+        <title>{% block title %} {% endblock %}</title>
+        <link rel = "stylesheet" type = "text/css" href = "css/style.css"/>
+    </head>
+    <body>
+    	<header>
+			<ul class = "navbar">
+				<a href = "index.php"><img src = "img/volley1.png"></a>
+                <li class = "logo"><a href = "index.php" class = "textlink">VolleyBet</a></li>
+				<li><a href = "index.php" class = "link">Home</a></li>
+				<li><a href = "#about.php" class = "link">About</a></li>
+				<li><a href = "#contact.php" class = "link">Contact</a></li>
+                {% block navbar_end %}
+                {% endblock%}
+			</ul>
+    	</header>
+        <main>
+            <div class = "left-sidebar">
+                {% block left_sidebar %}
+                {% endblock %}
+            </div>
+            <div class = "main-content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div class = "right-sidebar">
+                {% block right_sidebar %}
+                {% endblock %}
+            </div>
+        </main>
+        <footer>
+            <p>© 2020-2020 VolleyBet All rights reserved.</p>
+        </footer>
+    </body>
+</html>

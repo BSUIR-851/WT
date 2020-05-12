@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Add command | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main block-signup">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">
+            <div class = "edit-tag">Add command:</div>
+        </div>
+    </div>
+    <form name = "signup" action = "admin.php?id={{ match.id }}" method = "post" class = "form-signup">
+        <fieldset class = "user-data register">
+            <div class = "row full_name">
+                <label for = "full_name" class = "lb-reg">Full name:</label>
+                <input type = "text" name = "full_name" placeholder="Enter full name"/>
+            </div>
+            <div class = "row short_name">
+                <label for = "short_name" class = "lb-reg">Short name:</label>
+                <input type = "text" name = "short_name" placeholder="Enter short name"/>
+            </div>
+            <div class = "row wins">
+                <label for = "wins" class = "lb-reg">Amount of wins:</label>
+                <input type = "number" name = "wins" placeholder = "0"/>
+            </div>
+            <div class = "row loses">
+                <label for = "loses" class = "lb-reg">Amount of loses:</label>
+                <input type = "number" name = "loses" placeholder = "0"/>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "admin-add-command-submit" value = "Add"/>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

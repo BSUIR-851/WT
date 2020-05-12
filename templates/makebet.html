@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Make bet | VolleyBet
+{% endblock %}
+
+{% block content %}
+    {% if user.admin == true %}
+        {% include 'base/makebet/makebetadmin.html' with {'result': result, 'user': user} %}
+    {% else %}
+        {% include 'base/makebet/makebetuser.html' with {'result': result, 'user': user} %}
+    {% endif %}
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+

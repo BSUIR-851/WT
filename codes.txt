@@ -1,0 +1,16 @@
+100 - register form
+101 - login form
+102 - logged form
+103 - registered 
+
+200 - OK
+
+300 - not authorized
+
+404 - not OK
+405 - login and email both
+406 - pass and pass-check is not equal
+407 - incorrect pass
+
+500 - no user with this login
+501 - password is incorrect

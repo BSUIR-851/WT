@@ -1,0 +1,91 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Commands | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">Commands:</div>
+    </div>
+    <table class = "matches-future">
+        <thead class = "matches-thead-future">
+            <tr>
+                <td class = "match-name-thead">Full name:</td>
+                <td class = "match-date-thead">Short name:</td>
+                <td class = "match-coeff1-thead">Wins</td>
+                <td class = "match-coeff2-thead">Loses</td>
+                <td class = "make-bet-link-thead"></td>
+            </tr>
+        </thead>
+        <tbody class = "matches-tbody-future">
+            {% for command in commands %}
+            <tr id = {{ command.id }}>
+                <td class = "match-name-tbody">{{ command.full_name }}</td>
+                <td class = "match-date-tbody">{{ command.short_name }}</td>
+                <td class = "match-coeff1-tbody">{{ command.wins }}</td>
+                <td class = "match-coeff2-tbody">{{ command.loses }}</td>
+                <td class = "make-bet-link-tbody"><a href = "admin.php?command_id={{ command.id }}"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class = "pages">
+    <p class = "showing-of-all"></p>
+    <p class = "next-show"></p> 
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

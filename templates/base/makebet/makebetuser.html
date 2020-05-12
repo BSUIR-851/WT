@@ -1,0 +1,61 @@
+<div class = "block-main block-make-bet">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">MAKE BET:</div>
+    </div>
+    {% if result.code == 102 %}
+        {% if match != 404 %}
+            <form name = "match-bet" action = "" method = "post" class = "form-make-bet">
+                <fieldset class = "block-select select-match">
+                    <label for = "match-name-tag" class = "head">Your match:</label><br>
+                    <label for = "match-name">{{ match.name }}</label>
+                </fieldset>
+                <hr>
+                <fieldset class = "block-select select-team">
+                    <label for = "team" class = "head">Select team:</label><br>
+                    <input type = "radio" id = "1" name = "team" value = "1">
+                    <label for = "1">{{ match.name_command_1 }}</label><br>
+                    <input type = "radio" id = "2" name = "team" value = "2">
+                    <label for = "2">{{ match.name_command_2}}</label><br>
+                </fieldset>
+                <hr>
+                <fieldset class = "block-select select-payment">
+                    <label for = "payment-method" class = "head">Select a Payment Method:</label><br>
+                    <select name = "payment-method">
+                        <option value = "sms">SMS-payment by A1/MTS/LIFE</option>
+                        <option value = "erip">Calculation System (ERIP)</option>
+                        <option value = "bank" selected>VISA/MasterCard</option>
+                    </select><br><br>
+                    <label for = "price" class = "head">Bid price:</label><br>
+                    <input type = "number" name = "price"><br>
+                </fieldset>
+                <hr>
+                <fieldset class = "button-field">
+                    <input type = "submit" value = "MAKE BET"/>
+                </fieldset>
+            </form>
+
+        {% else %}
+            <form name = "match-bet" action = "index.php" class = "form-make-bet">
+                <fieldset class = "block-select select-match">
+                    <label for = "match-name-tag" class = "head">Your match:</label><br>
+                    <label for = "match-name">Match NOT found =(</label> 
+                </fieldset>
+                <hr>
+                <fieldset class = "button-field">
+                    <input type = "submit" value = "Back to main"/>
+                </fieldset>
+            </form>
+        {% endif %}
+    {% else %}
+        <form name = "match-bet" action = "login.php" class = "form-make-bet">
+                <fieldset class = "block-select select-match">
+                    <label for = "match-name-tag" class = "head">Your match:</label><br>
+                    <label for = "match-name">You are not authorized =(</label> 
+                </fieldset>
+                <hr>
+                <fieldset class = "button-field">
+                    <input type = "submit" value = "Log in"/>
+                </fieldset>
+        </form>
+    {% endif %}
+</div>

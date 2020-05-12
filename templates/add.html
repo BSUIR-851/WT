@@ -1,0 +1,83 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Add match | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main block-signup">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">
+            <div class = "edit-tag">Add match:</div>
+        </div>
+    </div>
+    <form name = "signup" action = "admin.php?id={{ match.id }}" method = "post" class = "form-signup">
+        <fieldset class = "user-data register">
+            <div class = "row login">
+                <label for = "command_1" class = "lb-reg">Command 1:</label>
+                <select name = "command_1" placeholder = "mylogin">
+                    {% for command in commands %}
+                    <option value ="{{ command.id }}" selected>{{ command.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class = "row login">
+                <label for = "command_2" class = "lb-reg">Command 2:</label>
+                <select name = "command_2" placeholder = "mylogin">
+                    {% for command in commands %}
+                    <option value ="{{ command.id }}" selected>{{ command.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class = "row datetime">
+                <label for = "datetime" class = "lb-reg">Date:</label>
+                <input type = "datetime-local" name = "datetime" value = "{{ now }}"/>
+            </div>
+            <div class = "row coeff_1">
+                <label for = "coeff_1" class = "lb-reg">Coefficient 1:</label>
+                <input type = "text" name = "coeff_1" value = "1.5"/>
+            </div>
+            <div class = "row coeff_2">
+                <label for = "coeff_2" class = "lb-reg">Coefficient 2:</label>
+                <input type = "text" name = "coeff_2" value = "1.5"/>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "admin-add-submit" value = "Add"/>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

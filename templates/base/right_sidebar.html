@@ -1,0 +1,35 @@
+{% if result.code == 102 %}
+<div class = "block-main">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">{{ user.login }}</div>
+    </div>
+
+    <form class = "user-info" action = "admin.php" method = "post">
+        <fieldset class = "user-data register">
+            <div class = "row name">
+                <label>{{ user.first_name }} {{ user.last_name }}:</label>
+            </div>
+            <div class = "row balance">
+                <label for = "balance">Balance: </label>
+                <label name = "balance">{{ user.balance }}</label>
+            </div>
+            <div class = "row email">
+                <label for = "email">Email: </label>
+                <label name = "email">{{ user.email }}</label>
+            </div>
+        </fieldset>
+        {% if user.admin == true %}
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "admin-add" value = "Add match"/><br>
+            <input type = "submit" name = "admin-add-command" value = "Add command"/><br>
+            <input type = "submit" name = "admin-show-commands" value = "Commands"/>
+        </fieldset>
+        {% endif %}
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "acount-submit" value = "My account"/>
+        </fieldset>
+    </form>
+</div>
+{% endif %}

@@ -1,0 +1,5 @@
+#404 Страница не найдена
+ErrorDocument 404 /volley/templates/error/404.html
+
+#403 Доступ запрещен
+ErrorDocument 403 /volley/templates/error/403.html

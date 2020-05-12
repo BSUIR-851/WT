@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Log In | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main block-login">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">LOG IN:</div>
+    </div>
+    <form name = "login" action = "{{ result.redir }}" method = "post" class = "form-login">
+        {% if result.code == 101 %}
+        <fieldset class = "user-data">
+            <input type = "text" name = "login" placeholder = "Your login"/>
+            <input type = "password" name = "pass" placeholder = "Your password"/>
+        </fieldset>
+        <fieldset class = "save-and-restore">
+            <input type = "checkbox" id = "save" name = "save"/>
+            <label for = "save" class = "save-label">Remember me</label>
+            <a href = "#" class = "restore-pass">Forgot password?</a>
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "login-submit" value = "LOG IN"/>
+        </fieldset>
+        {% else %}
+        <fieldset class = "user-data register">
+            <label class = "head">{{ result.header}}</label><br>
+            {% for body_line in result.body %}
+            <label>{{ body_line }}</label><br>
+            {% endfor %}
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            {% if result.success == true %}
+            <input type = "submit" value = "Back to main"/>
+            {% else %}
+            <input type = "submit" value = "Retry login"/>
+            {% endif %}
+        </fieldset>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

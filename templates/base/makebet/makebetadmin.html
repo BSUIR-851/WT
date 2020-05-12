@@ -1,0 +1,55 @@
+<div class = "block-main block-make-bet">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">MAKE BET:</div>
+    </div>
+    {% if result.code == 102 %}
+        {% if match != 404 %}
+        <form name = "match-bet" action = "admin.php?id={{ match.id }}" method = "post" class = "form-make-bet">
+            <fieldset class = "block-select select-match">
+                <label for = "match-name-tag" class = "head">Your match:</label><br>
+                <label for = "match-name">{{ match.name }}</label>
+            </fieldset>
+            <hr>
+            <fieldset class = "block-select select-team">
+                <label for = "team" class = "head">Teams:</label><br>
+                <label for = "1">Team #1: </label>
+                <label name = "team_1">{{ match.name_command_1 }}</label><br>
+
+                <label for = "2">Team #2: </label>
+                <label name = "team_2">{{ match.name_command_2}}</label><br>
+
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" name = "admin-edit" value = "Edit match"/>
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" name = "admin-delete" value = "Delete match"/>
+            </fieldset>
+        </form>
+        {% else %}
+        <form name = "match-bet" action = "index.php" class = "form-make-bet">
+            <fieldset class = "block-select select-match">
+                <label for = "match-name-tag" class = "head">Your match:</label><br>
+                <label for = "match-name">Match NOT found =(</label> 
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" value = "Back to main"/>
+            </fieldset>
+        </form>
+        {% endif %}
+    {% else %}
+    <form name = "match-bet" action = "login.php" class = "form-make-bet">
+            <fieldset class = "block-select select-match">
+                <label for = "match-name-tag" class = "head">Your match:</label><br>
+                <label for = "match-name">You are not authorized =(</label> 
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" value = "Log in"/>
+            </fieldset>
+    </form>
+    {% endif %}
+</div>

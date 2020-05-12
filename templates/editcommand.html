@@ -1,0 +1,90 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Edit command | VolleyBet
+{% endblock %}
+
+{% block content %}
+    {% if curr_command == 404 %}
+        {% set name = '' %}
+    {% else %}
+        {% set name = curr_command.name %}
+    {% endif %}
+
+<div class = "block-main block-signup">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">
+            <div class = "edit-tag">EDIT: {{ name }}</div>
+        </div>
+    </div>
+    {% if curr_command != 404 %}
+    <form name = "signup" action = "admin.php?edited_command_id={{ curr_command.id }}" method = "post" class = "form-signup">
+        <fieldset class = "user-data register">
+            <div class = "row full_name">
+                <label for = "full_name" class = "lb-reg">Full name:</label>
+                <input type = "text" name = "full_name" value = "{{ curr_command.full_name }}"/>
+            </div>
+            <div class = "row short_name">
+                <label for = "short_name" class = "lb-reg">Short name:</label>
+                <input type = "text" name = "short_name" value = "{{ curr_command.short_name }}"/>
+            </div>
+            <div class = "row wins">
+                <label for = "wins" class = "lb-reg">Wins:</label>
+                <input type = "number" name = "wins" value = "{{ curr_command.wins }}"/>
+            </div>
+            <div class = "row loses">
+                <label for = "loses" class = "lb-reg">Loses:</label>
+                <input type = "number" name = "loses" value = "{{ curr_command.loses }}"/>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" name = "admin-edit-command-submit" value = "Edit"/><br>
+            <input type = "submit" name = "admin-delete-command" value = "Delete"/>
+        </fieldset>
+    </form>
+    {% else %}
+    <form name = "match-bet" action = "index.php" class = "form-make-bet">
+        <fieldset class = "block-select">
+            <label for = "match-name-tag" class = "head">Your command:</label><br>
+            <label for = "match-name">Command NOT found =(</label> 
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" value = "Back to main"/>
+        </fieldset>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
