@@ -32,5 +32,4 @@
 
 	$result['result'] = getSettingsByCode($code);
 	echo $twig->render('login.html', $result);
-
 ?>

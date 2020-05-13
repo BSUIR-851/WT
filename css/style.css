@@ -554,10 +554,13 @@ input[type=text] {
 	box-sizing: border-box;
 	border: 3px solid #CCC;
 	border-radius: 5px;
-	height: 30px;
 
 	outline: none;
 	-webkit-transition: .5s;
+
+	height: 40px;
+	font-size: 15px;
+	margin-bottom: 2px;
 	
 }
 
@@ -582,8 +585,7 @@ input[type=text]:focus {
 }
 
 input[type=submit],
-button,
-.button {
+a.button {
 	display: inline-block;
 
 	background: #FFF;
@@ -607,26 +609,22 @@ button,
 	transition: .01s;
 }
 
-input[type=submit]:hover,
-button:hover
-.button:hover {
+input[type=submit]:hover {
 	border: 2px solid black;
 	cursor: pointer;
 }
 
-input[type=submit]:active,
-button:active,
-.button:active {
-	top: 2px;
+a.button {
+	line-height: 45px;
 }
 
-input[type=email],
-input[type=password],
-input[type=text] {
+a.button:hover {
+	border: 2px solid black;
+}
 
-	height: 40px;
-	font-size: 15px;
-	margin-bottom: 2px;
+input[type=submit]:active,
+a.button:active {
+	top: 2px;
 }
 
 input[type=checkbox] {
@@ -657,6 +655,10 @@ input[type=checkbox] {
 	width: 30%;
 	margin-top: 10px;
 	margin-right: 20px;
+}
+
+.value {
+	width: 90%;
 }
 
 .row {

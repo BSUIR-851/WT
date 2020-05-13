@@ -9,6 +9,14 @@
             <div class = "row name">
                 <label>{{ user.first_name }} {{ user.last_name }}:</label>
             </div>
+            <div class = "row role">
+                <label>Role: </label>
+                {% if user.admin == true %}
+                <label>Administrator</label>
+                {% else %}
+                <label>User</label>
+                {% endif %}
+            </div>
             <div class = "row balance">
                 <label for = "balance">Balance: </label>
                 <label name = "balance">{{ user.balance }}</label>
@@ -27,8 +35,10 @@
         </fieldset>
         {% endif %}
         <hr>
+    </form>
+    <form class = "user-info" action = "account.php?id={{ user.id }}" method = "post">
         <fieldset class = "button-field">
-            <input type = "submit" name = "acount-submit" value = "My account"/>
+            <input type = "submit" name = "account" value = "My account"/>
         </fieldset>
     </form>
 </div>

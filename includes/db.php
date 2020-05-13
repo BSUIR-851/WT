@@ -198,6 +198,15 @@
 			}
 		}
 
+		public function deleteUser($id) {
+			$data = [
+				'id' => $id,
+			];
+
+			$sth = $this->pdo->prepare("DELETE FROM users where id = :id");
+			$sth->execute($data);
+		}
+
 		private function isAdmin($user_id) {
 			$data = [
 				'user_id' => $user_id,
@@ -212,14 +221,47 @@
 			}
 		}
 
+		public function deleteAdmin($user_id) {
+			$data = [
+				'user_id' => $user_id,
+			];
+
+			$sth = $this->pdo->prepare("DELETE FROM admins where user_id = :user_id");
+			$sth->execute($data);
+		}
+
+		public function insertAdmin($user_id) {
+			$data = [
+				'user_id' => $user_id,
+			];
+			$sth = $this->pdo->prepare("INSERT INTO admins SET user_id = :user_id");
+			$sth->execute($data);
+			return $this->pdo->lastInsertId();
+		}
+
 		public function getUserInfoById($id) {
 			$data = [
 				'id' => $id,
 			];
-			$sth = $this->pdo->prepare("SELECT login, email, balance, first_name, last_name FROM users WHERE id = :id");
+			$sth = $this->pdo->prepare("SELECT id, login, email, balance, first_name, last_name FROM users WHERE id = :id");
 			$sth->execute($data);
 			$userInfo = $sth->fetch();
-			$userInfo['admin'] = $this->isAdmin($id);
+			if ($userInfo) {
+				$userInfo['admin'] = $this->isAdmin($id);
+			}
+			return $userInfo;
+		}
+
+		public function getFullUserInfoById($id) {
+			$data = [
+				'id' => $id,
+			];
+			$sth = $this->pdo->prepare("SELECT id, login, password, email, balance, first_name, last_name FROM users WHERE id = :id");
+			$sth->execute($data);
+			$userInfo = $sth->fetch();
+			if ($userInfo) {
+				$userInfo['admin'] = $this->isAdmin($id);
+			}
 			return $userInfo;
 		}
 
@@ -230,6 +272,12 @@
 			$sth = $this->pdo->prepare("SELECT id, login, password FROM users WHERE login = :login");
 			$sth->execute($data);
 			return $sth->fetch();
+		}
+
+		public function updateUser($userData) {
+			$sth = $this->pdo->prepare("UPDATE users SET password=:password, first_name=:first_name, 
+										last_name=:last_name WHERE id=:id");
+			$sth->execute($userData);
 		}
 
 	}

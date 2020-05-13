@@ -1,0 +1,117 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Account | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main block-signup">
+    {% if user.result.code == 102 %}
+        {% if edit_user != false and edit_user != 404 %}
+        <div class = "block-main-header">
+            <div class = "block-main-header-tag">{{ edit_user.login }}</div>
+        </div>
+        <form name = "signup" action = "account.php?id={{ edit_user.id }}" method = "post">
+            <fieldset class = "user-data register">
+                <div class = "row login">
+                    <label class = "lb-reg">Login:</label>
+                    <label class = "lb-reg value">{{ edit_user.login }}</label>
+                </div>
+                <div class = "row email">
+                    <label class = "lb-reg">Email:</label>
+                    <label class = "lb-reg value">{{ edit_user.email }}</label>
+                </div>
+                <div class = "row balancce">
+                    <label class = "lb-reg">Balance:</label>
+                    <label class = "lb-reg value">{{ edit_user.balance }}</label>
+                </div>
+                <div class = "row password">
+                    <label for = "password" class = "lb-reg">Password:</label>
+                    <input type = "text" name = "password" placeholder = "Password"/>
+                </div>
+                <div class = "row pass-check">
+                    <label for = "pass-check" class = "lb-reg">Confirm password:</label>
+                    <input type = "text" name = "pass-check" placeholder = "Confirm password"/>
+                </div>
+
+                <div class = "row first_name">
+                    <label for = "first_name" class = "lb-reg">First name:</label>
+                    <input type = "text" name = "first_name" value = "{{ edit_user.first_name }}"/>
+                </div>
+                <div class = "row last_name">
+                    <label for = "last_name" class = "lb-reg">Last name:</label>
+                    <input type = "text" name = "last_name" value = "{{ edit_user.last_name }}"/>
+                </div>
+            </fieldset>
+            <hr>
+            {% if user.admin == true %}
+            <fieldset class = "button-field">
+                    {% if edit_user.admin == true %}
+                    <input type = "submit" name = "admin-delete-admin-submit" value = "Delete from admins"/>
+                    {% else %}
+                    <input type = "submit" name = "admin-add-admin-submit" value = "Add to admins"/>
+                    {% endif %}
+            </fieldset> 
+            <hr>   
+            {% endif %}
+            <fieldset class = "button-field">
+                <input type = "submit" name = "edit-account-submit" value = "Edit"/><br>
+                <input type = "submit" name = "delete-account-submit" value = "Delete account"/>
+            </fieldset>
+        </form>
+
+        {% elseif edit_user == 404 %}
+        <div class = "block-main-header">
+            <div class = "block-main-header-tag">Account:</div>
+        </div>
+        <form name = "match-bet" action = "index.php">
+            <fieldset class = "block-select select-match">
+                <label for = "match-name-tag" class = "head">You can view only your account!</label><br>
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" value = "Back to main"/>
+            </fieldset>
+        </form>
+
+        {% elseif edit_user == false %}
+        <div class = "block-main-header">
+            <div class = "block-main-header-tag">Account:</div>
+        </div>
+        <form name = "match-bet" action = "index.php">
+            <fieldset class = "block-select select-match">
+                <label for = "match-name-tag" class = "head">User not found!</label><br>
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" value = "Back to main"/>
+            </fieldset>
+        </form>
+        {% endif %}
+    {% else %}
+    <div class = "block-main-header">
+            <div class = "block-main-header-tag">Error:</div>
+    </div>
+    <form name = "signup" action = "account.php?id={{ edit_user.id }}" method = "post">
+        <fieldset class = "user-data register">
+            <label class = "head">{{ user.result.header}}</label><br>
+            {% for body_line in user.result.body %}
+            <label>{{ body_line }}</label><br>
+            {% endfor %}
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" value = "Back to account"/>
+        </fieldset>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}

@@ -14,3 +14,6 @@
 
 500 - no user with this login
 501 - password is incorrect
+
+user codes:
+406 - pass and pass-check is not equal

@@ -30,7 +30,6 @@
 									'login' => $login,
 									'pass' => password_hash($pass, PASSWORD_DEFAULT),
 									'email' => $email,
-									'rating' => 0,
 									'firstName' => $firstName,
 									'lastName' => $lastName,
 								);
@@ -39,6 +38,8 @@
 						$db_users->insertUser($userData);
 						$code = 103;
 					} catch (PDOException $e) {
+						print_r($e);
+						print_r("\n");
 						$code = 405;
 					}
 
