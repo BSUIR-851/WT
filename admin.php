@@ -29,30 +29,21 @@
 			// submit add command
 			} else if (isset($data['admin-add-command-submit'])) {
 
-				if (isset($data['full_name'])) {
-					$full_name = $data['full_name'];
-				} else {
+				if (!isCorrectFieldPost($data, $full_name, 'full_name')) {
 					$full_name = 'full name';
 				}
 
-				if (isset($data['short_name'])) {
-					$short_name = $data['short_name'];
-				} else {
+				if (!isCorrectFieldPost($data, $short_name, 'short_name')) {
 					$short_name = 'short name';
 				}
-				
-				if (isset($data['wins'])) {
-					$wins = $data['wins'];
-				} else {
+
+				if (!isCorrectFieldPost($data, $wins, 'wins')) {
 					$wins = 0;
 				}
 
-				if (isset($data['loses'])) {
-					$loses = $data['loses'];
-				} else {
+				if (!isCorrectFieldPost($data, $loses, 'loses')) {
 					$loses = 0;
 				}
-
 
 				$commandData = [
 					'full_name' => $full_name,
@@ -84,27 +75,19 @@
 
 					$result['curr_command'] = $db_volleybet->getCommandInfoById($edited_command_id);
 
-					if (isset($data['full_name'])) {
-						$full_name = $data['full_name'];
-					} else {
+					if (!isCorrectFieldPost($data, $full_name, 'full_name')) {
 						$full_name = $result['curr_command']['full_name'];
 					}
 
-					if (isset($data['short_name'])) {
-						$short_name = $data['short_name'];
-					} else {
+					if (!isCorrectFieldPost($data, $short_name, 'short_name')) {
 						$short_name = $result['curr_command']['short_name'];
 					}
 					
-					if (isset($data['wins'])) {
-						$wins = $data['wins'];
-					} else {
+					if (!isCorrectFieldPost($data, $wins, 'wins')) {
 						$wins = $result['curr_command']['wins'];
 					}
 
-					if (isset($data['loses'])) {
-						$loses = $data['loses'];
-					} else {
+					if (!isCorrectFieldPost($data, $loses, 'loses')) {
 						$loses = $result['curr_command']['loses'];
 					}
 
@@ -140,33 +123,24 @@
 			// submit add match
 			} else if (isset($data['admin-add-submit'])) {
 
-				if (isset($data['command_1'])) {
-					$id_command_1 = $data['command_1'];
-				} else {
+
+				if (!isCorrectFieldPost($data, $id_command_1, 'command_1')) {
 					$id_command_1 = 1;
 				}
 
-				if (isset($data['command_2'])) {
-					$id_command_2 = $data['command_2'];
-				} else {
+				if (!isCorrectFieldPost($data, $id_command_2, 'command_2')) {
 					$id_command_2 = 1;
 				}
 				
-				if (isset($data['datetime'])) {
-					$date = $data['datetime'];
-				} else {
+				if (!isCorrectFieldPost($data, $date, 'datetime')) {
 					$date = $result['now'];
 				}
 
-				if (isset($data['coeff_1'])) {
-					$coeff_1 = $data['coeff_1'];
-				} else {
+				if (!isCorrectFieldPost($data, $coeff_1, 'coeff_1')) {
 					$coeff_1 = 1.5;
 				}
 
-				if (isset($data['coeff_2'])) {
-					$coeff_2 = $data['coeff_2'];
-				} else {
+				if (!isCorrectFieldPost($data, $coeff_2, 'coeff_2')) {
 					$coeff_2 = 1.5;
 				}
 
@@ -195,39 +169,28 @@
 
 			// submit edit match
 			} else if (isset($data['admin-edit-submit'])) {
-				if (isset($data['command_1'])) {
-					$id_command_1 = $data['command_1'];
-				} else {
+
+				if (!isCorrectFieldPost($data, $id_command_1, 'command_1')) {
 					$id_command_1 = $result['match']['id_command_1'];
 				}
 
-				if (isset($data['command_2'])) {
-					$id_command_2 = $data['command_2'];
-				} else {
+				if (!isCorrectFieldPost($data, $id_command_2, 'command_2')) {
 					$id_command_2 = $result['match']['id_command_2'];
 				}
 
-				if (isset($data['datetime'])) {
-					$date = $data['datetime'];
-				} else {
+				if (!isCorrectFieldPost($data, $date, 'datetime')) {
 					$date = $result['match']['date'];
 				}
 
-				if (isset($data['coeff_1'])) {
-					$coeff_1 = $data['coeff_1'];
-				} else {
+				if (!isCorrectFieldPost($data, $coeff_1, 'coeff_1')) {
 					$coeff_1 = $result['match']['coeff_1'];
 				}
 
-				if (isset($data['coeff_2'])) {
-					$coeff_2 = $data['coeff_2'];
-				} else {
+				if (!isCorrectFieldPost($data, $coeff_2, 'coeff_2')) {
 					$coeff_2 = $result['match']['coeff_2'];
 				}
 
-				if (isset($data['isLive'])) {
-					$isLive = $data['isLive'];
-				} else {
+				if (!isCorrectFieldPost($data, $isLive, 'isLive')) {
 					$isLive = $result['match']['isLive'];
 				}
 
