@@ -98,7 +98,7 @@
 		}
 
 		public function getMatchesId() {
-			$data = $this->pdo->query("SELECT id FROM matches");
+			$data = $this->pdo->query("SELECT id FROM matches ORDER BY `date` ASC");
 			return $data->fetchAll();
 		}
 
@@ -119,7 +119,7 @@
 				'id' => $id,
 			];
 
-			$sth = $this->pdo->prepare("SELECT * FROM matches where id = :id");
+			$sth = $this->pdo->prepare("SELECT * FROM matches where id = :id ");
 			$sth->execute($data);
 			$match = $sth->fetch();
 			if ($match) {
@@ -129,29 +129,40 @@
 			}
 		}
 
-		public function getMatches() {
-			$live_matches = [];
-			$future_matches = [];
+		public function getMatchesByStatus($status_matches) {
+			$matches = [];
+			$data = $this->pdo->query("SELECT * FROM $status_matches ORDER BY `date` ASC");
+			$matches_ids = $data->fetchAll();
 
-			$data = $this->pdo->query("SELECT * FROM matches");
-			$matches = $data->fetchAll();
-			
-			$matches = $this->formatMatchList($matches);
-
-			foreach($matches as $match) {
-				if ($match['isLive'] != NULL) {
-					array_push($live_matches, $match);
-				} else {
-					array_push($future_matches, $match);
-				}
+			foreach ($matches_ids as $match_id) {
+				$curr_id = $match_id['match_id'];
+				array_push($matches, $this->getMatchInfoById($curr_id));
 			}
 
+			$matches = $this->formatMatchList($matches);
+
+
+			return $matches;
+		}
+
+		public function getMatches() {
+
 			$return_matches = [
-				'live' => $live_matches,
-				'future' => $future_matches,
+				'live' => $this->getMatchesByStatus("live_matches"),
+				'future' => $this->getMatchesByStatus("future_matches"),
+				'end' => $this->getMatchesByStatus("end_matches"),
 			];
 			
 			return $return_matches;
+		}
+
+		private function getMatchDateById($match_id) {
+			$data = [
+				'match_id' => $match_id,
+			];
+			$sth = $this->pdo->prepare("SELECT date FROM matches WHERE match_id=:match_id");
+			$sth->execute($data);
+			return $sth->fetch();
 		}
 
 		public function updateMatch($editData) {
@@ -174,6 +185,23 @@
 										coeff_1=:coeff_1, coeff_2=:coeff_2");
 			$sth->execute($matchData);
 			return $this->pdo->lastInsertId();
+		}
+
+		public function insertMatchByStatus($match_id, $status_match) {
+			$data = [
+				'match_id' => $match_id,
+				'date' => $this->getMatchDateById($match_id),
+			];
+			$sth = $this->pdo->prepare("INSERT INTO $status_match SET match_id=:match_id, date=:date");
+			$sth->execute($data);
+		}
+
+		public function deleteMatchByStatus($match_id , $status_match) {
+			$data = [
+				'match_id' => $match_id,
+			];
+			$sth = $this->pdo->prepare("DELETE FROM $status_match where match_id = :match_id");
+			$sth->execute($data);
 		}
 
 		public function insertUser($userData) {
@@ -274,10 +302,35 @@
 			return $sth->fetch();
 		}
 
+		public function getUserEmailByLogin($login) {
+			$data = [
+				'login' => $login,
+			];
+			$sth = $this->pdo->prepare("SELECT email FROM users WHERE login = :login");
+			$sth->execute($data);
+			return $sth->fetch();
+		}
+
 		public function updateUser($userData) {
 			$sth = $this->pdo->prepare("UPDATE users SET password=:password, first_name=:first_name, 
 										last_name=:last_name WHERE id=:id");
 			$sth->execute($userData);
+		}
+
+		public function updatePasswordByLogin($data) {
+			$sth = $this->pdo->prepare("UPDATE users SET password=:password WHERE login=:login");
+			$sth->execute($data);
+		}
+
+		public function updateBalanceById($id, $balance) {
+			$data = [
+				'id' => $id,
+				'balance' => $balance,
+			];
+			
+			$sth = $this->pdo->prepare("UPDATE users SET balance=:balance WHERE id=:id");
+			$sth->execute($data);
+
 		}
 
 	}

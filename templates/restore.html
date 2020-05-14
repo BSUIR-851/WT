@@ -5,28 +5,22 @@
 {% endblock %}
 
 {% block title %}
-    Log In | VolleyBet
+    Restore | VolleyBet
 {% endblock %}
 
 {% block content %}
 <div class = "block-main block-login">
     <div class = "block-main-header">
-        <div class = "block-main-header-tag">LOG IN:</div>
+        <div class = "block-main-header-tag">Restore:</div>
     </div>
-    <form name = "login" action = "{{ result.redir }}" method = "post" class = "form-login">
+    <form name = "login" action = "restore.php" method = "post" class = "form-login">
         {% if result.code == 101 %}
         <fieldset class = "user-data">
             <input type = "text" name = "login" placeholder = "Your login"/>
-            <input type = "password" name = "pass" placeholder = "Your password"/>
-        </fieldset>
-        <fieldset class = "save-and-restore">
-            <input type = "checkbox" id = "save" name = "save"/>
-            <label for = "save" class = "save-label">Remember me</label>
-            <a href = "restore.php" class = "restore-pass" target="_blank">Forgot password?</a>
         </fieldset>
         <hr>
         <fieldset class = "button-field">
-            <input type = "submit" name = "login-submit" value = "LOG IN"/>
+            <input type = "submit" name = "restore-submit" value = "Restore"/>
         </fieldset>
         {% else %}
         <fieldset class = "user-data register">
@@ -38,9 +32,9 @@
         <hr>
         <fieldset class = "button-field">
             {% if result.success == true %}
-            <input type = "submit" value = "Back to main"/>
+            <input type = "submit" formaction = "index.php" value = "Back to main"/>
             {% else %}
-            <input type = "submit" value = "Retry login"/>
+            <input type = "submit" value = "Retry restore"/>
             {% endif %}
         </fieldset>
         {% endif %}

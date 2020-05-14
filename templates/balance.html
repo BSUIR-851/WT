@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Pop up balance | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main block-make-bet">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">Recharge the balance:</div>
+    </div>
+        <form name = "match-bet" action = "" method = "post" class = "form-make-bet">
+            <fieldset class = "block-select select-payment">
+                <label for = "payment-method" class = "head">Select a Payment Method:</label><br>
+                <select name = "payment-method">
+                    <!-- <option value = "sms">SMS-payment by A1/MTS/LIFE</option> 
+                    <option value = "erip">Calculation System (ERIP)</option> -->
+                    <option value = "bank" selected>VISA/MasterCard</option>
+                </select><br><br>
+                <label for = "card-number" class = "head">Card number:</label><br>
+                <input type = "text" name = "card-number" maxlength="16" inputmode="decimal"><br><br>
+                <label for = "cvv" class = "head">CVV code:</label><br>
+                <input type = "text" name = "cvv" placeholder = "333" maxlength="3" class = "middle-input" inputmode="decimal"><br><br>
+                <label for = "cvv" class = "head">Card Expiry Date:</label><br>
+                <input type = "text" name = "month-card" placeholder = "10" maxlength = "2" class = "little-input" inputmode="decimal">
+                <label>/</label>
+                <input type = "text" name = "year-card" placeholder = "2020" maxlength = "4" class = "middle-input" inputmode="decimal"><br><br>
+                <label for = "price" class = "head">Amount:</label><br>
+                <input type = "text" name = "amount" inputmode="decimal"><br>
+            </fieldset>
+            <hr>
+            <fieldset class = "button-field">
+                <input type = "submit" value = "Pop up"/>
+            </fieldset>
+        </form>
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+

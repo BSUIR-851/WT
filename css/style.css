@@ -440,7 +440,7 @@ table.matches-future thead.matches-thead-future td.match-coeff2-thead {
 	padding-top: 5px;
 }
 
-table.matches-future thead.matches-thead-future td.make-bet-link-thead {
+.make-bet-link-thead {
 	width: 50px;
 	border-bottom: 1px solid silver;
 	border-left: 1px solid silver;
@@ -485,7 +485,7 @@ table.matches-future tbody.matches-tbody-future td.match-coeff2-tbody {
 	border-left: 1px solid silver;
 }
 
-table.matches-future tbody.matches-tbody-future td.make-bet-link-tbody {
+.make-bet-link-tbody {
 	width: 50px;
 	height: 40px;
 	border-bottom: 1px solid silver;
@@ -523,6 +523,7 @@ form {
 
 label.head {
 	width: 100%;
+	font-size: 20px;
 }
 
 select {
@@ -672,6 +673,14 @@ legend {
   padding-left: 2px;
   padding-right: 2px;
   border: 1px solid #000;
+}
+
+input.little-input {
+	width: 15%;
+}
+
+input.middle-input {
+	width: 22%;
 }
 
 /* Mobile */

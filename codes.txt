@@ -2,10 +2,13 @@
 101 - login form
 102 - logged form
 103 - registered 
+104 - restore pass
 
 200 - OK
 
 300 - not authorized
+
+400 - something gone wrong 
 
 404 - not OK
 405 - login and email both

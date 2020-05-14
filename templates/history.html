@@ -11,62 +11,32 @@
 {% block content %}
 <div class = "block-main">
     <div class = "block-main-header">
-        <div class = "block-main-header-tag">LIVE MATCHES:</div>
-    </div>
-    <table class = "matches-live">
-        <thead class = "matches-thead-live">
-            <tr>
-                <td class = "match-name-thead">Match name:</td>
-                <td class = "match-score-thead">Score:</td>
-                <td class = "match-coeff1-thead">1</td>
-                <td class = "match-coeff2-thead">2</td>
-                {% if user.admin == true %}
-                <td class = "make-bet-link-thead"></td>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody class = "matches-tbody-live">
-            {% for match in live_matches %}
-            <tr id = {{ match.id }}>
-                <td class = "match-name-tbody">{{ match.name }}</td>
-                <td class = "match-score-tbody">{{ match.score_command_1 }}:{{ match.score_command_2 }}</td>
-                <td class = "match-coeff1-tbody">{{ match.coeff_1 }}</td>
-                <td class = "match-coeff2-tbody">{{ match.coeff_2 }}</td>
-                {% if user.admin == true %}
-                <td class = "make-bet-link-tbody"><a href = "makebet.php?id={{ match.id }}"></a></td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                
-            </tr>
-        </tfoot>
-    </table>
-</div>
-<div class = "block-main">
-    <div class = "block-main-header">
-        <div class = "block-main-header-tag">FUTURE MATCHES:</div>
+        <div class = "block-main-header-tag">FINISHED MATCHES:</div>
     </div>
     <table class = "matches-future">
         <thead class = "matches-thead-future">
             <tr>
                 <td class = "match-name-thead">Match name:</td>
                 <td class = "match-date-thead">Date:</td>
+                <td class = "match-date-thead">Score:</td>
                 <td class = "match-coeff1-thead">1</td>
                 <td class = "match-coeff2-thead">2</td>
+                {% if user.admin == true %}
                 <td class = "make-bet-link-thead"></td>
+                {% endif %}
             </tr>
         </thead>
         <tbody class = "matches-tbody-future">
-            {% for match in future_matches %}
+            {% for match in end_matches %}
             <tr id = {{ match.id }}>
                 <td class = "match-name-tbody">{{ match.name }}</td>
                 <td class = "match-date-tbody">{{ match.date }}</td>
+                <td class = "match-date-tbody">{{ match.score_command_1 }}:{{ match.score_command_2 }}</td>
                 <td class = "match-coeff1-tbody">{{ match.coeff_1 }}</td>
                 <td class = "match-coeff2-tbody">{{ match.coeff_2 }}</td>
+                {% if user.admin == true %}
                 <td class = "make-bet-link-tbody"><a href = "makebet.php?id={{ match.id }}"></a></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

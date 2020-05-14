@@ -37,7 +37,35 @@
 		}
 	}
 
-	function getSettingsByCode($code) {
+	function getGeneratedPass() {
+		$symbols = ['A', 'a', 'bb', 'za', 'yg', 'h', 'w', 'F', 'K', 'T', 'Q', 'S', 'Y', 'O', 'kt'];
+		$numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '12', '13', '22', '76', '95'];
+		$specSymbols = ['!', '@', '#', '%', '*'];
+		$all = [];
+		$all = array_unique(array_merge($all, $symbols));
+		$all = array_unique(array_merge($all, $numbers));
+		$all = array_unique(array_merge($all, $specSymbols));
+
+		$base = 'cr';
+		for ($i = 0; $i < 3; $i++) {
+			shuffle($numbers);
+			$base = $base.$numbers[0];
+		}
+
+		$base = $base.'_';
+		$base = $base.$symbols[0];
+		$base = $base.$numbers[3];
+		$base = $base.$specSymbols[2];
+
+		for ($i = 0; $i < 10; $i++) {
+			shuffle($all);
+			$base = $base.$all[0];
+		}
+
+		return $base;
+	}
+
+	function getSettingsByCode($code, $textError = NULL) {
 		$settings['code'] = $code;
 		$settings['success'] = false;
 
@@ -66,6 +94,31 @@
 				$settings['body'] = [
 					'You have been registered!',
 				];
+				break;
+
+			case 104:
+				$settings['success'] = true;
+				$settings['redir'] = '';
+				$settings['header'] = 'Restore account';
+				$settings['body'] = [
+					'The new password has been sent to the email address you provided during registration.',
+				];
+				break;
+
+			case 400:
+				$settings['redir'] = '';
+				$settings['header'] = 'Restore account';
+				if ($textError != NULL) {
+					$settings['body'] = [
+						'Something gone wrong:',
+						"$textError",
+					];
+				} else {
+					$settings['body'] = [
+						'Something gone wrong.',
+						'Please, check your email.',
+					];
+				}
 				break;
 
 			case 404:

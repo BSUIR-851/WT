@@ -3,7 +3,7 @@
         <div class = "block-main-header-tag">MAKE BET:</div>
     </div>
     {% if result.code == 102 %}
-        {% if match != 404 %}
+        {% if match != 404 and match.isLive != 1 %}
             <form name = "match-bet" action = "" method = "post" class = "form-make-bet">
                 <fieldset class = "block-select select-match">
                     <label for = "match-name-tag" class = "head">Your match:</label><br>
@@ -19,12 +19,6 @@
                 </fieldset>
                 <hr>
                 <fieldset class = "block-select select-payment">
-                    <label for = "payment-method" class = "head">Select a Payment Method:</label><br>
-                    <select name = "payment-method">
-                        <option value = "sms">SMS-payment by A1/MTS/LIFE</option>
-                        <option value = "erip">Calculation System (ERIP)</option>
-                        <option value = "bank" selected>VISA/MasterCard</option>
-                    </select><br><br>
                     <label for = "price" class = "head">Bid price:</label><br>
                     <input type = "number" name = "price"><br>
                 </fieldset>

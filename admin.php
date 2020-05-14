@@ -153,6 +153,8 @@
 				];
 
 				$id = $db_volleybet->insertMatch($matchData);
+				$db_volleybet->insertMatchByStatus($id, "future_matches");
+
 				$commands = $db_volleybet->getCommands();
 				$result['commands'] = $commands;
 				$result['match'] = $db_volleybet->getMatchInfoById($id);
@@ -205,13 +207,33 @@
 				];
 
 				$db_volleybet->updateMatch($editData);
+
+				if (($result['match']['isLive'] == 0) && ($isLive == 1)) {
+					$db_volleybet->insertMatchByStatus($id, "live_matches");
+					$db_volleybet->deleteMatchByStatus($id, "future_matches");
+					
+				} else if (($result['match']['isLive'] == 1) && ($isLive == 0)) {
+					$db_volleybet->deleteMatchByStatus($id, "live_matches");
+					$db_volleybet->insertMatchByStatus($id, "future_matches");
+				}
+
 				$commands = $db_volleybet->getCommands();
 				$result['commands'] = $commands;
 				$result['match'] = $db_volleybet->getMatchInfoById($id);
 				echo $twig->render('edit.html', $result);
 
 			// delete match
+			} else if (isset($data['admin-finish'])) {
+				$db_volleybet->deleteMatchByStatus($id, "live_matches");
+				$db_volleybet->deleteMatchByStatus($id, "future_matches");
+				$db_volleybet->insertMatchByStatus($id, "end_matches");
+				header("Location: index.php");
+
+			// delete match
 			} else if (isset($data['admin-delete'])) {
+				$db_volleybet->deleteMatchByStatus($id, "live_matches");
+				$db_volleybet->deleteMatchByStatus($id, "future_matches");
+				$db_volleybet->deleteMatchByStatus($id, "end_matches");
 				$db_volleybet->deleteMatch($id);
 				header("Location: index.php");
 			
