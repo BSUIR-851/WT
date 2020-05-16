@@ -13,7 +13,7 @@
 				$id = $_GET['id'];
 				$matchById = $db_volleybet->getMatchInfoById($id);
 			} else {
-				$matchById = 404;
+				$matchById = false;
 			}
 			$result['match'] = $matchById;
 
@@ -144,12 +144,22 @@
 					$coeff_2 = 1.5;
 				}
 
+				if (!isCorrectFieldPost($data, $score_command_1, 'score_command_1')) {
+					$score_command_1 = 0;
+				}
+
+				if (!isCorrectFieldPost($data, $score_command_2, 'score_command_2')) {
+					$score_command_2 = 0;
+				}
+
 				$matchData = [
 					'id_command_1' => $id_command_1,
 					'id_command_2' => $id_command_2,
 					'date' => $date,
 					'coeff_1' => $coeff_1,
 					'coeff_2' => $coeff_2,
+					'score_command_1' => $score_command_1,
+					'score_command_2' => $score_command_2,
 				];
 
 				$id = $db_volleybet->insertMatch($matchData);
@@ -163,7 +173,7 @@
 
 			// edit match
 			} else if (isset($data['admin-edit'])) {
-				if ($result['match'] != 404) {
+				if ($result['match']) {
 					echo $twig->render('edit.html', $result);
 				} else {
 					echo $twig->render('makebet.html', $result);
@@ -196,6 +206,14 @@
 					$isLive = $result['match']['isLive'];
 				}
 
+				if (!isCorrectFieldPost($data, $score_command_1, 'score_command_1')) {
+					$score_command_1 = $result['match']['score_command_1'];
+				}
+
+				if (!isCorrectFieldPost($data, $score_command_2, 'score_command_2')) {
+					$score_command_2 = $result['match']['score_command_2'];
+				}
+
 				$editData = [
 					'id' => $result['match']['id'],
 					'id_command_1' => $id_command_1,
@@ -204,6 +222,8 @@
 					'coeff_1' => $coeff_1,
 					'coeff_2' => $coeff_2,
 					'isLive' => $isLive,
+					'score_command_1' => $score_command_1,
+					'score_command_2' => $score_command_2,
 				];
 
 				$db_volleybet->updateMatch($editData);
@@ -227,6 +247,12 @@
 				$db_volleybet->deleteMatchByStatus($id, "live_matches");
 				$db_volleybet->deleteMatchByStatus($id, "future_matches");
 				$db_volleybet->insertMatchByStatus($id, "end_matches");
+				$status = [
+					'id' => $id,
+					'isLive' => 0,
+					'isEnd' => 1,
+				];
+				$db_volleybet->updateMatchStatus($status);
 				header("Location: index.php");
 
 			// delete match

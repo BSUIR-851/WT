@@ -3,7 +3,7 @@
         <div class = "block-main-header-tag">MAKE BET:</div>
     </div>
     {% if result.code == 102 %}
-        {% if match != 404 %}
+        {% if match %}
         <form name = "match-bet" action = "admin.php?id={{ match.id }}" method = "post" class = "form-make-bet">
             <fieldset class = "block-select select-match">
                 <label for = "match-name-tag" class = "head">Your match:</label><br>
@@ -21,12 +21,12 @@
             </fieldset>
             <hr>
             <fieldset class = "button-field">
-                <input type = "submit" name = "admin-edit" value = "Edit match"/>
-            </fieldset>
-            <fieldset class = "button-field">
-                <input type = "submit" name = "admin-finish" value = "Finish match"/>
-            </fieldset>
-            <fieldset class = "button-field">
+                {% if match.isEnd == 0 %}
+                <input type = "submit" name = "admin-edit" value = "Edit match"/><br>
+                {% endif %}
+                {% if match.isLive == 1 and match.isEnd == 0 %}
+                <input type = "submit" name = "admin-finish" value = "Finish match"/><br>
+                {% endif %}
                 <input type = "submit" name = "admin-delete" value = "Delete match"/>
             </fieldset>
         </form>

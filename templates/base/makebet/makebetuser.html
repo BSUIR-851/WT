@@ -3,7 +3,7 @@
         <div class = "block-main-header-tag">MAKE BET:</div>
     </div>
     {% if result.code == 102 %}
-        {% if match != 404 and match.isLive != 1 %}
+        {% if match and match.isLive != 1 %}
             <form name = "match-bet" action = "" method = "post" class = "form-make-bet">
                 <fieldset class = "block-select select-match">
                     <label for = "match-name-tag" class = "head">Your match:</label><br>
@@ -12,9 +12,9 @@
                 <hr>
                 <fieldset class = "block-select select-team">
                     <label for = "team" class = "head">Select team:</label><br>
-                    <input type = "radio" id = "1" name = "team" value = "1">
+                    <input type = "radio" id = "1" name = "command-id" value = "{{ match.id_command_1 }}" checked>
                     <label for = "1">{{ match.name_command_1 }}</label><br>
-                    <input type = "radio" id = "2" name = "team" value = "2">
+                    <input type = "radio" id = "2" name = "command-id" value = "{{ match.id_command_2 }}">
                     <label for = "2">{{ match.name_command_2}}</label><br>
                 </fieldset>
                 <hr>
@@ -24,7 +24,7 @@
                 </fieldset>
                 <hr>
                 <fieldset class = "button-field">
-                    <input type = "submit" value = "MAKE BET"/>
+                    <input type = "submit" name = "make-bet" value = "MAKE BET"/>
                 </fieldset>
             </form>
 

@@ -125,7 +125,7 @@
 			if ($match) {
 				return $this->formatMatch($match);
 			} else {
-				return 404;
+				return false;
 			}
 		}
 
@@ -158,17 +158,22 @@
 
 		private function getMatchDateById($match_id) {
 			$data = [
-				'match_id' => $match_id,
+				'id' => $match_id,
 			];
-			$sth = $this->pdo->prepare("SELECT date FROM matches WHERE match_id=:match_id");
+			$sth = $this->pdo->prepare("SELECT date FROM matches WHERE id=:id");
 			$sth->execute($data);
 			return $sth->fetch();
 		}
 
 		public function updateMatch($editData) {
 			$sth = $this->pdo->prepare("UPDATE matches SET id_command_1=:id_command_1, id_command_2=:id_command_2, date=:date, 
-										coeff_1=:coeff_1, coeff_2=:coeff_2, isLive=:isLive WHERE id=:id");
+										coeff_1=:coeff_1, coeff_2=:coeff_2, isLive=:isLive, score_command_1=:score_command_1, score_command_2=:score_command_2 WHERE id=:id");
 			$sth->execute($editData);
+		}
+
+		public function updateMatchStatus($status) {
+			$sth = $this->pdo->prepare("UPDATE matches SET isLive=:isLive, isEnd=:isEnd WHERE id=:id");
+			$sth->execute($status);
 		}
 
 		public function deleteMatch($id) {
@@ -182,7 +187,7 @@
 
 		public function insertMatch($matchData) {
 			$sth = $this->pdo->prepare("INSERT INTO matches SET id_command_1=:id_command_1, id_command_2=:id_command_2, date=:date, 
-										coeff_1=:coeff_1, coeff_2=:coeff_2");
+										coeff_1=:coeff_1, coeff_2=:coeff_2, score_command_1=:score_command_1, score_command_2=:score_command_2");
 			$sth->execute($matchData);
 			return $this->pdo->lastInsertId();
 		}
@@ -190,7 +195,7 @@
 		public function insertMatchByStatus($match_id, $status_match) {
 			$data = [
 				'match_id' => $match_id,
-				'date' => $this->getMatchDateById($match_id),
+				'date' => $this->getMatchDateById($match_id)['date'],
 			];
 			$sth = $this->pdo->prepare("INSERT INTO $status_match SET match_id=:match_id, date=:date");
 			$sth->execute($data);
@@ -333,6 +338,27 @@
 
 		}
 
+		public function makeBet($betInfo) {
+			$sth = $this->pdo->prepare("INSERT INTO bets SET user_id=:user_id, match_id=:match_id, bid_amount=:bid_amount, command_id=:command_id");
+			$sth->execute($betInfo);
+			return $this->pdo->lastInsertId();
+		}
+
+		public function isExistBet($user_id, $match_id) {
+			$data = [
+				'user_id' => $user_id,
+				'match_id' => $match_id,
+			];
+
+			$sth = $this->pdo->prepare("SELECT COUNT(*) FROM bets WHERE user_id = :user_id AND match_id=:match_id");
+			$sth->execute($data);
+			$count = $sth->fetchColumn();
+			if ($count > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 

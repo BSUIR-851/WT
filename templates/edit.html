@@ -54,6 +54,14 @@
                 <label for = "coeff_2" class = "lb-reg">Coefficient 2:</label>
                 <input type = "text" name = "coeff_2" value = "{{ match.coeff_2 }}"/>
             </div>
+            <div class = "row score_command_1">
+                <label for = "score_command_1" class = "lb-reg">Score com 1:</label>
+                <input type = "number" name = "score_command_1" value = "{{ match.score_command_1 }}"/>
+            </div>
+            <div class = "row score_command_2">
+                <label for = "score_command_2" class = "lb-reg">Score com 2:</label>
+                <input type = "number" name = "score_command_2" value = "{{ match.score_command_2 }}"/>
+            </div><br>
                 <label for = "isLive" class = "lb-reg">Is LIVE: </label><br>
                 {% if match.isLive == 1 %}
                 <input type = "radio" id = "isLive_1" name = "isLive" value = "1" checked>
