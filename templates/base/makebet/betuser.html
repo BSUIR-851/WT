@@ -1,6 +1,6 @@
 <div class = "block-main block-make-bet">
     <div class = "block-main-header">
-        <div class = "block-main-header-tag">MAKE BET:</div>
+        <div class = "block-main-header-tag">YOUR BET:</div>
     </div>
     {% if result.code == 102 %}
         {% if match and match.isLive != 1 and match.isEnd != 1 %}
@@ -11,20 +11,17 @@
                 </fieldset>
                 <hr>
                 <fieldset class = "block-select select-team">
-                    <label for = "team" class = "head">Select team:</label><br>
-                    <input type = "radio" id = "1" name = "command-id" value = "{{ match.id_command_1 }}" checked>
-                    <label for = "1">{{ match.name_command_1 }}</label><br>
-                    <input type = "radio" id = "2" name = "command-id" value = "{{ match.id_command_2 }}">
-                    <label for = "2">{{ match.name_command_2}}</label><br>
+                    <label class = "lb-reg">Selected team:</label>
+                    <label>{{ user.bet.command_name }}</label><br>
                 </fieldset>
                 <hr>
                 <fieldset class = "block-select select-payment">
-                    <label for = "price" class = "head">Bid price:</label><br>
-                    <input type = "number" name = "price"><br>
+                    <label class = "lb-reg">Bid price:</label>
+                    <input type = "text" value = "{{ user.bet.bid_amount }}" readonly><br>
                 </fieldset>
                 <hr>
                 <fieldset class = "button-field">
-                    <input type = "submit" name = "make-bet" value = "MAKE BET"/>
+                    <input type = "submit" name = "delete-bet" value = "DELETE BET"/>
                 </fieldset>
             </form>
 

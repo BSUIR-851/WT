@@ -344,6 +344,21 @@
 			return $this->pdo->lastInsertId();
 		}
 
+		public function getBetInfoByMatchAndUserId($betInfo) {
+			$sth = $this->pdo->prepare("SELECT * FROM bets WHERE user_id=:user_id AND match_id=:match_id");
+			$sth->execute($betInfo);
+			$bet = $sth->fetch();
+			$bet['command_name'] = $this->getCommandNameById($bet['command_id'])['short_name'];
+			return $bet;
+		}
+
+		public function deleteBet($betInfo) {
+			$bet = $this->getBetInfoByMatchAndUserId($betInfo);
+			$sth = $this->pdo->prepare("DELETE FROM bets where user_id=:user_id AND match_id=:match_id");
+			$sth->execute($betInfo);
+			return $bet;
+		}
+
 		public function isExistBet($user_id, $match_id) {
 			$data = [
 				'user_id' => $user_id,
