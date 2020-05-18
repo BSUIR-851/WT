@@ -242,8 +242,32 @@
 				$result['match'] = $db_volleybet->getMatchInfoById($id);
 				echo $twig->render('edit.html', $result);
 
-			// delete match
+			// finish match
 			} else if (isset($data['admin-finish'])) {
+				$matchInfo = $db_volleybet->getMatchInfoById($id);
+				if ($matchInfo['score_command_1'] > $matchInfo['score_command_2']) {
+					$winner_id = $matchInfo['id_command_1'];
+					$winner_coeff = $matchInfo['coeff_1'];
+				} else {
+					$winner_id = $matchInfo['id_command_2'];
+					$winner_coeff = $matchInfo['coeff_2'];
+				}
+				$betInfo = [
+					'match_id' => $id,
+					'command_id' => $winner_id,
+				];
+
+				$bets = $db_volleybet->getBetByMatchIdAndWinnerId($betInfo);
+				foreach($bets as $bet) {
+					$userInfo = $db_volleybet->getUserInfoById($bet['user_id']);
+					$newBalance = $userInfo['balance'] + $bet['bid_amount'] * $winner_coeff;
+					$db_volleybet->updateBalanceById($bet['user_id'], $newBalance);
+					$deleteInfo = [
+						'user_id' => $bet['user_id'],
+						'match_id' => $bet['match_id'], 
+					];
+					$db_volleybet->deleteBet($deleteInfo);
+				}
 				$db_volleybet->deleteMatchByStatus($id, "live_matches");
 				$db_volleybet->deleteMatchByStatus($id, "future_matches");
 				$db_volleybet->insertMatchByStatus($id, "end_matches");
@@ -252,7 +276,7 @@
 					'isLive' => 0,
 					'isEnd' => 1,
 				];
-				$db_volleybet->updateMatchStatus($status);
+				$db_volleybet->updateMatchStatus($status); 
 				header("Location: index.php");
 
 			// delete match

@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.admin == true %}
+    {% if user.admin %}
         {% include 'base/makebet/makebetadmin.html' with {'result': result, 'user': user} %}
     {% else %}
         {% include 'base/makebet/betuser.html' with {'result': result, 'user': user} %}

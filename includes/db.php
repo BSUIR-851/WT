@@ -352,11 +352,39 @@
 			return $bet;
 		}
 
+		private function formatBets(&$bets) {
+			foreach($bets as $key => $bet) {
+				$bet['match'] = $this->getMatchInfoById($bet['match_id']);	
+				$bets[$key] = $bet;
+			}
+			return $bets;
+		}
+
+		public function getBetsByUserId($user_id) {
+			$data = [
+				'user_id' => $user_id,
+			];
+
+			$sth = $this->pdo->prepare("SELECT * FROM bets WHERE user_id=:user_id");
+			$sth->execute($data);
+			$bets = $sth->fetchAll();
+			if ($bets) {
+				$bets = $this->formatBets($bets);
+			} 
+			return $bets;
+		}
+
 		public function deleteBet($betInfo) {
 			$bet = $this->getBetInfoByMatchAndUserId($betInfo);
 			$sth = $this->pdo->prepare("DELETE FROM bets where user_id=:user_id AND match_id=:match_id");
 			$sth->execute($betInfo);
 			return $bet;
+		}
+
+		public function getBetByMatchIdAndWinnerId($betInfo) {
+			$sth = $this->pdo->prepare("SELECT * FROM bets WHERE match_id=:match_id AND command_id=:command_id");
+			$sth->execute($betInfo);
+			return $sth->fetchAll();
 		}
 
 		public function isExistBet($user_id, $match_id) {
@@ -365,7 +393,7 @@
 				'match_id' => $match_id,
 			];
 
-			$sth = $this->pdo->prepare("SELECT COUNT(*) FROM bets WHERE user_id = :user_id AND match_id=:match_id");
+			$sth = $this->pdo->prepare("SELECT COUNT(*) FROM bets WHERE user_id=:user_id AND match_id=:match_id");
 			$sth->execute($data);
 			$count = $sth->fetchColumn();
 			if ($count > 0) {

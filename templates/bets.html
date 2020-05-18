@@ -1,0 +1,86 @@
+{% extends "base/base.html" %}
+
+{% block navbar_end %}
+    {% include 'base/header.html' with {'result': result} %}
+{% endblock %}
+
+{% block title %}
+    Commands | VolleyBet
+{% endblock %}
+
+{% block content %}
+<div class = "block-main">
+    <div class = "block-main-header">
+        <div class = "block-main-header-tag">Bets:</div>
+    </div>
+    {% if result.code == 102 %}
+    <table class = "matches-future">
+        <thead class = "matches-thead-future">
+            <tr>
+                <td class = "match-name-thead">Match name:</td>
+                <td class = "match-date-thead">Date:</td>
+                <td class = "match-date-thead">Chosen command:</td>
+                <td class = "match-coeff1-thead">Bid amount:</td>
+                <td class = "match-coeff2-thead">Coefficient:</td>
+                <td class = "make-bet-link-thead"></td>
+            </tr>
+        </thead>
+        <tbody class = "matches-tbody-future">
+            <tr id = {{ command.id }}>
+                {% for bet in user.bets %}
+                    <td class = "match-name-tbody">{{ bet.match.name }}</td>
+                    <td class = "match-date-tbody">{{ bet.match.date }}</td>
+                    {% if bet.command_id == bet.match.id_command_1 %}
+                    <td class = "match-date-tbody">{{ bet.match.name_command_1 }}</td>
+                    {% elseif bet.command_id == bet.matсh.id_command_2 %}
+                    <td class = "match-date-tbody">{{ bet.match.name_command_2 }}</td>
+                    {% endif %}
+                    <td class = "match-coeff1-tbody">{{ bet.bid_amount }}</td>
+
+                    {% if bet.command_id == bet.match.id_command_1 %}
+                    <td class = "match-coeff2-tbody">{{ bet.match.coeff_1 }}</td>
+                    {% elseif bet.command_id == bet.matсh.id_command_2 %}
+                    <td class = "match-coeff2-tbody">{{ bet.match.coeff_2 }}</td>
+                    {% endif %}
+                    <td class = "make-bet-link-tbody"><a href = "makebet.php?id={{ bet.match.id }}"></a></td>
+                {% endfor %}
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+    <form name = "match-bet" action = "login.php" class = "form-make-bet">
+        <fieldset class = "block-select select-match">
+            <label for = "match-name-tag" class = "head">Error:</label><br>
+            <label for = "match-name">You are not authorized =(</label> 
+        </fieldset>
+        <hr>
+        <fieldset class = "button-field">
+            <input type = "submit" value = "Log in"/>
+        </fieldset>
+    </form>
+    {% endif %}
+</div>
+<div class = "pages">
+    <p class = "showing-of-all"></p>
+    <p class = "next-show"></p> 
+</div>
+{% endblock %}
+
+{% block right_sidebar %}
+    {% include 'base/right_sidebar.html' with {'result': result, 'user': user} %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

@@ -26,7 +26,7 @@
                 <label name = "email">{{ user.email }}</label>
             </div>
         </fieldset>
-        {% if user.admin == true %}
+        {% if user.admin %}
         <hr>
         <fieldset class = "button-field">
             <input type = "submit" name = "admin-add" value = "Add match"/><br>
@@ -41,6 +41,13 @@
             <input type = "submit" name = "account" value = "My account"/>
         </fieldset>
     </form>
+    {% if user.admin == false %}
+    <form class = "user-info" action = "bets.php" method = "post">
+        <fieldset class = "button-field">
+            <input type = "submit" name = "account" value = "Bets"/>
+        </fieldset>
+    </form>
+    {% endif %}
     <form class = "user-info" action = "balance.php">
         <fieldset class = "button-field">
             <input type = "submit" value = "Top up balance"/>
